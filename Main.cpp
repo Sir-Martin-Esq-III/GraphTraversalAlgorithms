@@ -34,7 +34,7 @@ std::vector<std::vector<double > > distanceMatrix;
 
 void createDistanceMatrix(sf::RenderWindow& window) {
 	  sf::Vector2f node1, node2;
-	  //sf::RenderWindow windowRef=window;
+	  sf::RenderWindow& windowRef=window;
 	  int dy, dx;
 	  double distBetweenNodes;
 	  for (int itr1 = 0; itr1<nodeArray.size(); itr1++) {
@@ -52,19 +52,42 @@ void createDistanceMatrix(sf::RenderWindow& window) {
 			      newEdge[1].color = sf::Color::Red;
 			      newRow.push_back(distBetweenNodes);
 			      edgeArray.push_back(newEdge);
-			      if (itr2 == nodeArray.size() - 1) {//Should it be -1
-				        std::cout << '\n';
-			      }else {
-				        std::cout << distBetweenNodes << '\t';
-			      }
-		    }
-		// for (int itr5=0;itr5<edgeArray.size();itr5++){
-		//   windowRef.draw(edgeArray[itr5]);
-		// }
+			      if (itr2 == nodeArray.size() - 1) {
+				std::cout << distBetweenNodes << '\n';
+			}else {
+				std::cout << distBetweenNodes << '\t';
+			}
+			for (int itr5 = 0; itr5<edgeArray.size(); itr5++) {
+				windowRef.draw(edgeArray[itr5]);
+			}
+		}
+		windowRef.display();
+		_sleep(100);// usleep for GNU/UNIX systems
+		edgeArray.clear();  
 	}
-	//  edgeArray.clear(); 
 }
 
+void primms() {
+	sf::Vector2f node1, node2;
+	double smallestNum=0;
+	int smallesNumPos;
+	std::vector<int> allowedCol(0);// Start from the first node
+	while (distanceMatrix.size() > 0) { // Should be n-1
+		for (int itr5 = 0; itr5 < allowedCol.size(); itr5++) {
+			//Find the smalles element in the allowed cols and then make that the next 
+			//Need to find the path from the distance matrix
+			sf::VertexArray newEdge(sf::Lines, 2);
+
+			newEdge[0].position = sf::Vector2f(node1);
+			newEdge[1].position = sf::Vector2f(node2);
+			edgeArray.push_back(newEdge);
+		}
+		//distanceMatrix.erase(0); Remove the row with the position of node1
+		smallesNumPos = 0;
+		smallestNum = 0;
+	}
+}	
+	
 int main() {
     sf::RenderWindow window(sf::VideoMode(width, height), "TITLE");
     while (window.isOpen()) {
